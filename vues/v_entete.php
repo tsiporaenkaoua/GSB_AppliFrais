@@ -6,12 +6,7 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL <jgil@ac-nice.fr>
- * @copyright 2017 Réseau CERTA
- * @license   Réseau CERTA
- * @version   GIT: <0>
- * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
+ * @author Enkaoua Tsipora
  */
 ?>
 <!DOCTYPE html>
@@ -28,8 +23,8 @@
     </head>
     <body>
         <div class="container">
-            <?php// uc est une variable qui nous permet de savoir quoi faire dans quel cas on est(case)
-            $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);// ce filtre enleve les balises ou les caracteres speciaux qui fait qu on puisse reconnaitre   
+            <?php
+            $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
             if ($estConnecte) {
                 ?>
             <div class="header">
@@ -43,7 +38,7 @@
                     </div>
                     <div class="col-md-8">
                         <ul class="nav nav-pills pull-right" role="tablist">
-                            <li <?php if (!$uc || $uc == 'accueil') { ?>class="active" <?php } ?>>
+                            <li <?php if (!$uc || $uc == 'accueil') { ?>class="active" <?php } ?>><!class="active"permet de cibler un élément lorsque celui ci est activé par l'utilisateur>
                                 <a href="index.php">
                                     <span class="glyphicon glyphicon-home"></span>
                                     Accueil
@@ -73,7 +68,7 @@
                 </div>
             </div>
             <?php
-            } else {
+            } else { // on parle de si c pas connecté?? il se passe quoi ya que le logo qui s'affiche dans ce cas??
                 ?>   
                 <h1>
                     <img src="./images/logo.jpg"

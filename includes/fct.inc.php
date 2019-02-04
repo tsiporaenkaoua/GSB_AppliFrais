@@ -6,12 +6,7 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    Cheri Bibi - Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL <jgil@ac-nice.fr>
- * @copyright 2017 Réseau CERTA
- * @license   Réseau CERTA
- * @version   GIT: <0>
- * @link      http://www.php.net/manual/fr/book.pdo.php PHP Data Objects sur php.net
+ * @author Enkaoua Tsipora
  */
 
 /**
@@ -21,8 +16,34 @@
  */
 function estConnecte()
 {
-    return isset($_SESSION['idVisiteur']);//isset retourne vrai si le parametre a l'interieur est defini et sinon retourne false  isset(var[parametre]) session //SESSION EN MAJ est une variable superglobale qui contient plusieurs autres variables idvisiteur nom prenom...
+    return isset($_SESSION['idUtilisateur']);//isset retourne vrai si le parametre a l'interieur est defini et sinon retourne false  isset(var[parametre]) session //SESSION EN MAJ est une variable superglobale qui contient plusieurs autres variables idvisiteur nom prenom...
 }
+
+/**
+ * Teste si l'utilisateur est un comptable
+ *
+ * @return vrai ou faux
+ */
+
+function estComptableConnecte()
+{
+    if(estConnecte()){//on met if de tel sorte a ce que si on accede a ct fonction sans etre passé par index on peut pas se connecter
+        return ($_SESSION['statut']=='comptable');
+    }
+}
+/**
+ * Teste si l'utilisateur est un visiteur
+ *
+ * @return vrai ou faux
+ */
+function estVisiteurConnecte ()
+{
+     if(estConnecte()){
+        return ($_SESSION['statut']=='visiteur');
+     }
+}
+
+
 
 /**
  * Enregistre dans une variable session les infos d'un visiteur
@@ -33,11 +54,12 @@ function estConnecte()
  *
  * @return null
  */
-function connecter($idVisiteur, $nom, $prenom)
+function connecter($idUtilisateur, $nom, $prenom, $statut)
 {
-    $_SESSION['idVisiteur'] = $idVisiteur;
+    $_SESSION['idUtilisateur'] = $idUtilisateur;//on met les variables dans la superglobale que fait on de nos 4 variables est ce qu'elles sont vides ou bien elles  rentrent dans la superglobale????????
     $_SESSION['nom'] = $nom;
     $_SESSION['prenom'] = $prenom;
+    $_SESSION['statut']=$statut;
 }
 
 /**

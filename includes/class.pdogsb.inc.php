@@ -6,12 +6,7 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    Cheri Bibi - Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL - CNED <jgil@ac-nice.fr>
- * @copyright 2017 Réseau CERTA
- * @license   Réseau CERTA
- * @version   GIT: <0>
- * @link      http://www.php.net/manual/fr/book.pdo.php PHP Data Objects sur php.net
+ * @author Enkaoua Tsipora
  */
 
 /**
@@ -29,11 +24,7 @@
  * @category  PPE
  * @package   GSB
  * @author    Cheri Bibi - Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL <jgil@ac-nice.fr>
- * @copyright 2017 Réseau CERTA
- * @license   Réseau CERTA
- * @version   Release: 1.0
- * @link      http://www.php.net/manual/fr/book.pdo.php PHP Data Objects sur php.net
+ * @author    Tsipora Enkaoua
  */
 
 class PdoGsb
@@ -52,7 +43,7 @@ class PdoGsb
     private function __construct()
     {
         PdoGsb::$monPdo = new PDO(//nouvelle connection
-            PdoGsb::$serveur . ';' . PdoGsb::$bdd,
+            PdoGsb::$serveur . ';' . PdoGsb::$bdd,//signifie quoi??
             PdoGsb::$user,
             PdoGsb::$mdp
         );
@@ -73,9 +64,9 @@ class PdoGsb
      *
      * @return l'unique objet de la classe PdoGsb
      */
-    public static function getPdoGsb()
-    {
-        if (PdoGsb::$monPdoGsb == null) {//si monPdoGsb == nul ca signifie que ya pas eu de connection
+    public static function getPdoGsb()// static:qui retourne tjrs pareil
+    {//SI MA BASE DE DONN2E:PdoGsb N4EST PAS COnnéctée  refaire une connection
+        if (PdoGsb::$monPdoGsb == null) {//si monPdoGsb == nul ca signifie que ya pas eu de connection  
             PdoGsb::$monPdoGsb = new PdoGsb();//une instance c qu'on realise tt ce qu'il ya dans le constructeur pdo (coorespond en php a la connection)
         }
         return PdoGsb::$monPdoGsb;
@@ -96,6 +87,20 @@ class PdoGsb
             . 'visiteur.prenom AS prenom '
             . 'FROM visiteur '
             . 'WHERE visiteur.login = :unLogin AND visiteur.mdp = :unMdp'
+        );
+        $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);//:unLogin correspond a $login
+        $requetePrepare->bindParam(':unMdp', $mdp, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        return $requetePrepare->fetch();
+    }
+    
+    public function getInfosComptable($login, $mdp)
+    {
+        $requetePrepare = PdoGsb::$monPdo->prepare( 
+            'SELECT comptable.id AS id, comptable.nom AS nom, '
+            . 'comptable.prenom AS prenom '
+            . 'FROM comptable '
+            . 'WHERE comptable.login = :unLogin AND comptable.mdp = :unMdp'
         );
         $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unMdp', $mdp, PDO::PARAM_STR);
