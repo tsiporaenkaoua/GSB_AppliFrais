@@ -17,7 +17,7 @@
             </div>
             <div class="panel-body">
                 <form role="form" method="post" 
-                      action="index.php?uc=connexion&action=valideConnexion">
+                      action="index.php?uc=connexion&action=valideConnexion"><!uc=connexion & action=valideConnexion>
                     <fieldset>
                         <div class="form-group">
                             <div class="input-group">
@@ -46,3 +46,5 @@
         </div>
     </div>
 </div>
+
+ <!pq on met pas header('Location: index.php');pour retourner a index avec les données existantes???>

@@ -19,5 +19,5 @@ if ($estVisiteurConnecte) {
 elseif ($estComptableConnecte) {    
      include 'vues/v_accueil_comptable.php';
 } else {
-    include 'vues/v_connexion.php';//si on ne l'est pas rester dans la page connection de l'appli
+    include 'vues/v_connexion.php';
 }

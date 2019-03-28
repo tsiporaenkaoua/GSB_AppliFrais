@@ -12,7 +12,7 @@
 
 <div id="accueil">
     <h2>
-        Gestion des frais<small> - Comptable : 
+        Validation des fiches de frais<small> - Comptable : 
             <?php 
             echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']
             ?></small>
@@ -30,14 +30,14 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">
-                        <a href="index.php?uc=gererFrais&action=saisirFrais"
+                        <a href="index.php?uc=validerFrais&action=saisirVisiteurMois"
                            class="btn btn-success btn-lg" role="button">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <br>Valider la fiche de frais</a>
-                        <a href="index.php?uc=etatFrais&action=selectionnerMois"
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <br>Valider les fiches de frais</a>
+                        <a href="index.php?uc=&action="
                            class="btn btn-primary btn-lg" role="button">
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                            <br>Afficher les fiches de frais</a>
+                            <span class="glyphicon glyphicon-euro"></span>
+                            <br>Suivre le paiement des fiches de frais</a>
                     </div>
                 </div>
             </div>

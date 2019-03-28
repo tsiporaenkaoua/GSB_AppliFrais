@@ -25,7 +25,7 @@
                     $libelle = htmlspecialchars($unFrais['libelle']);
                     $quantite = $unFrais['quantite']; ?>
                     <div class="form-group">
-                        <label for="idFrais"><?php echo $libelle ?></label>
+                        <label for="idFrais"><?php echo $libelle ?></label><!echo permet d'afficher une variable/><!type="text" = zone de texte/>
                         <input type="text" id="idFrais" 
                                name="lesFrais[<?php echo $idFrais ?>]"
                                size="10" maxlength="5" 

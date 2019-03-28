@@ -1,7 +1,7 @@
 <?php
 /**
  * Génération d'un jeu d'essai
- *
+ *majGSB= mise a jour de la base de donnée
  * PHP Version 7
  *
  * @category  PPE

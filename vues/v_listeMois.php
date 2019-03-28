@@ -14,16 +14,16 @@
     <div class="col-md-4">
         <h3>Sélectionner un mois : </h3>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4"><!form = formulaire/>
         <form action="index.php?uc=etatFrais&action=voirEtatFrais" 
-              method="post" role="form">
+              method="post" role="form"><!POST si les données du formulaire contiennent des info perso. n'affiche pas les données de formulaire soumises dans le champ d'adresse de la page./>
             <div class="form-group">
                 <label for="lstMois" accesskey="n">Mois : </label>
                 <select id="lstMois" name="lstMois" class="form-control">
                     <?php
                     foreach ($lesMois as $unMois) {
                         $mois = $unMois['mois'];
-                        $numAnnee = $unMois['numAnnee'];
+                        $numAnnee = $unMois['numAnnee']; 
                         $numMois = $unMois['numMois'];
                         if ($mois == $moisASelectionner) {
                             ?>

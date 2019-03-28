@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fonctions pour l'application GSB
  *
@@ -14,9 +15,8 @@
  *
  * @return vrai ou faux
  */
-function estConnecte()
-{
-    return isset($_SESSION['idUtilisateur']);//isset retourne vrai si le parametre a l'interieur est defini et sinon retourne false  isset(var[parametre]) session //SESSION EN MAJ est une variable superglobale qui contient plusieurs autres variables idvisiteur nom prenom...
+function estConnecte() {
+    return isset($_SESSION['idUtilisateur']); //isset retourne vrai si le parametre a l'interieur est defini et sinon retourne false  isset(var[parametre]) session //SESSION EN MAJ est une variable superglobale qui contient plusieurs autres variables idvisiteur nom prenom...
 }
 
 /**
@@ -24,29 +24,25 @@ function estConnecte()
  *
  * @return vrai ou faux
  */
-
-function estComptableConnecte()
-{
-    if(estConnecte()){//on met if de tel sorte a ce que si on accede a ct fonction sans etre passé par index on peut pas se connecter
-        return ($_SESSION['statut']=='comptable');
+function estComptableConnecte() {
+    if (estConnecte()) {//on met if de tel sorte a ce que si on accede a ct fonction sans etre passé par index on peut pas se connecter
+        return ($_SESSION['statut'] == 'comptable');
     }
 }
+
 /**
  * Teste si l'utilisateur est un visiteur
  *
  * @return vrai ou faux
  */
-function estVisiteurConnecte ()
-{
-     if(estConnecte()){
-        return ($_SESSION['statut']=='visiteur');
-     }
+function estVisiteurConnecte() {
+    if (estConnecte()) {
+        return ($_SESSION['statut'] == 'visiteur');
+    }
 }
 
-
-
 /**
- * Enregistre dans une variable session les infos d'un visiteur
+ * Enregistre dans une variable session (superglobale) les infos d'un visiteur
  *
  * @param String $idVisiteur ID du visiteur
  * @param String $nom        Nom du visiteur
@@ -54,12 +50,11 @@ function estVisiteurConnecte ()
  *
  * @return null
  */
-function connecter($idUtilisateur, $nom, $prenom, $statut)
-{
-    $_SESSION['idUtilisateur'] = $idUtilisateur;//on met les variables dans la superglobale que fait on de nos 4 variables est ce qu'elles sont vides ou bien elles  rentrent dans la superglobale????????
+function connecter($idUtilisateur, $nom, $prenom, $statut) {
+    $_SESSION['idUtilisateur'] = $idUtilisateur;
     $_SESSION['nom'] = $nom;
     $_SESSION['prenom'] = $prenom;
-    $_SESSION['statut']=$statut;
+    $_SESSION['statut'] = $statut;
 }
 
 /**
@@ -67,8 +62,7 @@ function connecter($idUtilisateur, $nom, $prenom, $statut)
  *
  * @return null
  */
-function deconnecter()
-{
+function deconnecter() {
     session_destroy();
 }
 
@@ -80,8 +74,7 @@ function deconnecter()
  *
  * @return Date au format anglais aaaa-mm-jj
  */
-function dateFrancaisVersAnglais($maDate)
-{
+function dateFrancaisVersAnglais($maDate) {
     @list($jour, $mois, $annee) = explode('/', $maDate);
     return date('Y-m-d', mktime(0, 0, 0, $mois, $jour, $annee));
 }
@@ -94,8 +87,7 @@ function dateFrancaisVersAnglais($maDate)
  *
  * @return Date au format format français jj/mm/aaaa
  */
-function dateAnglaisVersFrancais($maDate)
-{
+function dateAnglaisVersFrancais($maDate) {
     @list($annee, $mois, $jour) = explode('-', $maDate);
     $date = $jour . '/' . $mois . '/' . $annee;
     return $date;
@@ -108,14 +100,35 @@ function dateAnglaisVersFrancais($maDate)
  *
  * @return String Mois au format aaaamm
  */
-function getMois($date)
-{
-    @list($jour, $mois, $annee) = explode('/', $date);
-    unset($jour);
-    if (strlen($mois) == 1) {
-        $mois = '0' . $mois;
+function getMois($date) {
+    @list($jour, $mois, $annee) = explode('/', $date); //on fait une liste qui permet de separer grace a l'indicateur / ( explode) la date $date dans 3 variables diffrentes 
+    unset($jour); //on supprime le jour
+    if (strlen($mois) == 1) {//si longeur du mois $mois=2
+        $mois = '0' . $mois; // on fait une concatenation $mois=02
     }
     return $annee . $mois;
+}
+
+/**
+ * Fonction qui retourne le mois précédent un mois passé en paramètre
+ *
+ * @param String $mois Contient le mois à utiliser
+ *
+ * @return String le mois d'avant
+ */
+function getMoisPrecedent($mois) {
+    $numAnnee = substr($mois, 0, 4);
+    $numMois = substr($mois, 4, 2);
+    if ($numMois == '01') {
+        $numMois = '12';
+        $numAnnee--;
+    } else {
+        $numMois--;
+    }
+    if (strlen($numMois) == 1) {
+        $numMois = '0' . $numMois; /* concatenation pr le php */
+    }
+    return $numAnnee . $numMois;
 }
 
 /* gestion des erreurs */
@@ -127,8 +140,7 @@ function getMois($date)
  *
  * @return Boolean vrai ou faux
  */
-function estEntierPositif($valeur)
-{
+function estEntierPositif($valeur) {
     return preg_match('/[^0-9]/', $valeur) == 0;
 }
 
@@ -139,8 +151,7 @@ function estEntierPositif($valeur)
  *
  * @return Boolean vrai ou faux
  */
-function estTableauEntiers($tabEntiers)
-{
+function estTableauEntiers($tabEntiers) {
     $boolReturn = true;
     foreach ($tabEntiers as $unEntier) {
         if (!estEntierPositif($unEntier)) {
@@ -157,8 +168,7 @@ function estTableauEntiers($tabEntiers)
  *
  * @return Boolean vrai ou faux
  */
-function estDateDepassee($dateTestee)
-{
+function estDateDepassee($dateTestee) {
     $dateActuelle = date('d/m/Y');
     @list($jour, $mois, $annee) = explode('/', $dateActuelle);
     $annee--;
@@ -174,8 +184,7 @@ function estDateDepassee($dateTestee)
  *
  * @return Boolean vrai ou faux
  */
-function estDateValide($date)
-{
+function estDateValide($date) {
     $tabDate = explode('/', $date);
     $dateOK = true;
     if (count($tabDate) != 3) {
@@ -199,8 +208,7 @@ function estDateValide($date)
  *
  * @return Boolean vrai ou faux
  */
-function lesQteFraisValides($lesFrais)
-{
+function lesQteFraisValides($lesFrais) {
     return estTableauEntiers($lesFrais);
 }
 
@@ -216,8 +224,7 @@ function lesQteFraisValides($lesFrais)
  *
  * @return null
  */
-function valideInfosFrais($dateFrais, $libelle, $montant)
-{
+function valideInfosFrais($dateFrais, $libelle, $montant) {
     if ($dateFrais == '') {
         ajouterErreur('Le champ date ne doit pas être vide');
     } else {
@@ -226,7 +233,7 @@ function valideInfosFrais($dateFrais, $libelle, $montant)
         } else {
             if (estDateDepassee($dateFrais)) {
                 ajouterErreur(
-                    "date d'enregistrement du frais dépassé, plus de 1 an"
+                        "date d'enregistrement du frais dépassé, plus de 1 an"
                 );
             }
         }
@@ -248,8 +255,7 @@ function valideInfosFrais($dateFrais, $libelle, $montant)
  *
  * @return null
  */
-function ajouterErreur($msg)
-{
+function ajouterErreur($msg) {
     if (!isset($_REQUEST['erreurs'])) {
         $_REQUEST['erreurs'] = array();
     }
@@ -261,11 +267,25 @@ function ajouterErreur($msg)
  *
  * @return Integer le nombre d'erreurs
  */
-function nbErreurs()
-{
+function nbErreurs() {
     if (!isset($_REQUEST['erreurs'])) {
         return 0;
     } else {
         return count($_REQUEST['erreurs']);
     }
+}
+
+function getDouzeMoisPrecedents($mois) {
+    $lesMois = array();
+    for ($i = 1; $i <= 12; $i++) {
+        $mois = getMoisPrecedent($mois);
+        $numAnnee = substr($mois, 0, 4);
+        $numMois = substr($mois, 4, 2);
+        $lesMois[] = array(
+            'mois' => $mois,
+            'numAnnee' => $numAnnee,
+            'numMois' => $numMois,
+        );
+    }
+    return $lesMois;
 }
